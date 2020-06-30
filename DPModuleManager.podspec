@@ -15,7 +15,7 @@ Pod::Spec.new do |spec|
   #  summary should be tweet-length, and the description more in depth.
   #
 
-  spec.name         = "ModuleManager"
+  spec.name         = "DPModuleManager"
   spec.version      = "1.0"
   spec.summary      = "模块(组件)管理器"
 
@@ -65,6 +65,7 @@ Pod::Spec.new do |spec|
 
   # spec.platform     = :ios
   spec.platform     = :ios, "10.0"
+  spec.swift_version = '5.2'  
 
   #  When using multiple platforms
   # spec.ios.deployment_target = "5.0"
