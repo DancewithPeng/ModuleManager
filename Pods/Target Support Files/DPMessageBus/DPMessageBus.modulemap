@@ -1,0 +1,6 @@
+framework module DPMessageBus {
+  umbrella header "DPMessageBus-umbrella.h"
+
+  export *
+  module * { export * }
+}

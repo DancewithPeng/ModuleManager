@@ -1,0 +1,24 @@
+PODS:
+  - DPLog (2.0)
+  - DPMessageBus (1.0)
+  - DPObjCRuntime (1.0)
+
+DEPENDENCIES:
+  - DPLog (~> 2.0.0)
+  - DPMessageBus (~> 1.0.0)
+  - DPObjCRuntime (~> 1.0.0)
+
+SPEC REPOS:
+  trunk:
+    - DPLog
+    - DPMessageBus
+    - DPObjCRuntime
+
+SPEC CHECKSUMS:
+  DPLog: 820205ee14c28edd9dcebc7e39b94231aa9630fb
+  DPMessageBus: b3ba08970140f9f5b115de6ee9a0ceb8c3d8849e
+  DPObjCRuntime: f32a795f50de1cebf49545850dde94f1f7d67b2f
+
+PODFILE CHECKSUM: 7994710b290d95a2513f5e9156f8a1bcddfc3d61
+
+COCOAPODS: 1.9.3

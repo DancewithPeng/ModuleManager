@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="eQc-fD-Rl9">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="9rm-45-tKQ">
+            <objects>
+                <navigationController id="eQc-fD-Rl9" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Xyh-b2-LNo">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="Pbh-D7-2J0"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2EM-L8-kFj" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1541" y="-17"/>
+        </scene>
+        <!--Module Manager Demo-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HaN-Bk-vHj">
+                                <rect key="frame" x="177.5" y="256" width="59" height="30"/>
+                                <state key="normal" title="ObjC Lib"/>
+                                <connections>
+                                    <action selector="objcLibButtonDidClick:" destination="BYZ-38-t0r" eventType="touchUpInside" id="SWc-fR-e09"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I3S-v4-4Xd">
+                                <rect key="frame" x="177" y="305" width="60" height="30"/>
+                                <state key="normal" title="Swift Lib"/>
+                                <connections>
+                                    <action selector="swiftLibButtonDidClick:" destination="BYZ-38-t0r" eventType="touchUpInside" id="jJY-x6-5lh"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="HaN-Bk-vHj" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="168" id="2As-Kl-PhC"/>
+                            <constraint firstItem="I3S-v4-4Xd" firstAttribute="top" secondItem="HaN-Bk-vHj" secondAttribute="bottom" constant="19" id="Ari-S9-E5G"/>
+                            <constraint firstItem="I3S-v4-4Xd" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="f9A-OX-v6c"/>
+                            <constraint firstItem="HaN-Bk-vHj" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="sSA-51-TYe"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Module Manager Demo" id="zfk-ae-z8B"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-759" y="-17"/>
+        </scene>
+    </scenes>
+</document>

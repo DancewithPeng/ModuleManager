@@ -1,0 +1,4 @@
+${PODS_ROOT}/Target Support Files/Pods-SwiftApp/Pods-SwiftApp-frameworks.sh
+${BUILT_PRODUCTS_DIR}/DPLog/DPLog.framework
+${BUILT_PRODUCTS_DIR}/DPMessageBus/DPMessageBus.framework
+${BUILT_PRODUCTS_DIR}/DPObjCRuntime/DPObjCRuntime.framework
