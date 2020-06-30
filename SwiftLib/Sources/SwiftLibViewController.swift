@@ -13,6 +13,11 @@ class SwiftLibViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        SwiftLibModule.bus.runService(withName: "User/SignIn",
+                                      info: ["account": "MyAccount",
+                                             "password": "MyPassword"]) { (info) in
+            
+        }
     }
     
     @IBAction func pushObjCViewControllerButtonDidClick(_ sender: Any) {

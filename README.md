@@ -32,7 +32,83 @@ pod 'DPModuleManager', '~> 1.0.0'
 
 
 
+#### 通过URL获取到对应的UIViewController
 
+调用方通过*URL*获取对应的*UIViewController*对象，这里的URL为指定的字符串，你可以随意指定，但是个人建议和页面路由对应
+
+这里以模拟的*问题详情页*来进行举例，这里的必要参数`questionID`，可以直接在URL中定义，也可以通过`info`参数传递，这取决于提供页面的模块如果返回对应的UIViewController对象
+
+```swift
+guard let vc = ModuleManager.shared.viewController(withURL: "Question/Detail", info: ["questionID": "MyQuestionID"]) else {
+  	return
+}
+// ...
+```
+
+> 除了可以通过ModuleManager来调用`viewController(withURL:, info:)`方法，也提供了Module中的便捷调用方法`Module.bus.viewController(withURL:, info:)`
+
+在提供*问题详情页*的模块中，需要实现对应的**Module**的钩子方法
+
+```swift
+// Question模块
+class QuestionModule: Module {
+    
+ 		// 返回模块可以处理的URL
+    override var canHandleURLs: [String]? {        
+      	return [
+          	"Question/Detail"
+        ]
+    }     
+    
+  	// 返回URL对应的ViewController
+    override func viewController(withURL url: String, info: [String : Any]?) -> UIViewController? {       
+      	// ...
+      	if url == "Question/Detail", let questionID = info["questionID"] {
+          	let questionDetailVC = QuestionDetailViewController(questionID: questionID)          
+          	return questionDetailVC
+        }      
+        return nil
+    }    
+}
+```
+
+
+
+#### 通过Service调用相关服务
+
+这里通过调用模拟的*登录*服务来举例
+
+```swift
+ModuleManager.shared.runService(withName: "User.SignIn",
+																		info: ["account": "MyAccount",
+																					 "password": "MyPassword"]) { (callbackParams) in
+		// ...                                                                    
+}
+```
+
+>  服务调用是异步进行
+
+然后在*用户*模块中，需要对服务调用进行处理
+
+```swift
+// 用户模块
+class MyModule: Module {    
+    
+  	// 返回模块可以处理服务名称
+    override var canHandleServiceNames: [String]? {
+        return ["User.SignIn"]
+    }    
+    
+  	// 处理相关的服务调用
+    override func runService(withName serviceName: String, info: [String : Any]?, callback: @escaping ([String : Any]) -> Void) -> Bool {        
+      	if serviceName == "User.SignIn", let account = info["account"], let password = info["password"] {
+          	// Sign In Handling ...
+          	return true
+				}
+        return false
+    }        
+}
+```
 
 
 
@@ -79,4 +155,10 @@ class MyModule: Module {
     }
 }
 ```
+
+
+
+## LICENSE
+
+此项目采用**MIT**开源协议，[点击查看详情](LICENSE)
 
