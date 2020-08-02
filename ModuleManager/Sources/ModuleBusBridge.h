@@ -16,6 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol ModuleBusBridge <NSObject>
 
 - (nullable UIViewController *)viewControllerWithURL:(NSString *)url info:(nullable NSDictionary<NSString *, id> *)info;
+- (nullable id)resourcesWithURL:(NSString *)url info:(nullable NSDictionary<NSString *, id> *)info;
 - (BOOL)runServiceWithName:(NSString *)serviceName info:(nullable NSDictionary<NSString *, id> *)info callback:(void (^)(NSDictionary<NSString *, id> *))callback;
 - (void)postMessage:(NSString *)message info:(nullable NSDictionary<NSString *, id> *)info;
 

@@ -39,6 +39,12 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (nullable UIViewController *)viewControllerWithURL:(NSString *)url info:(nullable NSDictionary<NSString *, id> *)info;
 
+/// 根据`URL`和`info`返回对应的资源
+/// @param url 对应的URL
+/// @param info 对应info
+/// @return 如果模块内部能处理URL，并且info的参数正确，返回对应的资源对象，反之则返回nil
+- (nullable id)resourcesWithURL:(NSString *)url info:(nullable NSDictionary<NSString *, id> *)info;
+
 /**
  运行自定的服务
 

@@ -18,6 +18,7 @@
 @property (nonatomic, strong, readonly) MBMessageBus *uiBus;                ///< UI总线
 @property (nonatomic, strong, readonly) MBMessageBus *serviceBus;           ///< 服务总线
 @property (nonatomic, strong, readonly) MBMessageBus *messageBus;           ///< 消息总线
+@property (nonatomic, strong, readonly) MBMessageBus *resourcesBus;         ///< 资源总线
 
 @end
 
@@ -27,6 +28,7 @@
 @synthesize uiBus = _uiBus;
 @synthesize serviceBus = _serviceBus;
 @synthesize messageBus = _messageBus;
+@synthesize resourcesBus = _resourcesBus;
 
 
 - (instancetype)init {
@@ -68,6 +70,11 @@
     return [self.uiBus sendMessage:url withInfo:info];
 }
 
+// Bus 想要获取对应的资源
+- (id)resourcesWithURL:(NSString *)url info:(NSDictionary<NSString *,id> *)info {
+    return [self.resourcesBus sendMessage:url withInfo:info];
+}
+
 // Bus 想要运行相关的服务
 - (BOOL)runServiceWithName:(NSString *)serviceName info:(NSDictionary<NSString *,id> *)info callback:(void (^)(NSDictionary<NSString *,id> * _Nonnull))callback {
     return [self.serviceBus sendAsyncMessage:serviceName withInfo:info callback:callback];
@@ -84,23 +91,38 @@
 - (id)bus:(MBMessageBus *)bus didReceivedMessage:(NSString *)message info:(NSDictionary<NSString *,id> *)info {
     
     // UI总线只处理UI相关的东西
-    if (bus != self.uiBus) {
+    if (bus == self.uiBus) {
+        for (int i=0; i<self.modules.count; i++) {
+            Module *m = self.modules[i];
+            if ([m.canHandleURLs containsObject:message] == NO) {
+                continue;
+            }
+            id ret = [m viewControllerWithURL:message info:info];
+            if ([ret isKindOfClass:UIViewController.class]) {
+                return ret;
+            }
+        }
+        
+        DPLogError(@"没有组件可以处理这个URL：%@ info: %@", message, info ? info : @"nil");
         return nil;
     }
     
-    for (int i=0; i<self.modules.count; i++) {
-        Module *m = self.modules[i];
-        if ([m.canHandleURLs containsObject:message] == NO) {
-            continue;
+    if (bus == self.resourcesBus) {
+        for (int i=0; i<self.modules.count; i++) {
+            Module *m = self.modules[i];
+            if ([m.canHandleURLs containsObject:message] == NO) {
+                continue;
+            }
+            id ret = [m resourcesWithURL:message info:info];
+            if (ret != nil) {
+                return ret;
+            }
         }
-        id ret = [m viewControllerWithURL:message info:info];
-        if ([ret isKindOfClass:UIViewController.class]) {
-            return ret;
-        }
+        DPLogError(@"没有组件可以处理这个URL：%@ info: %@", message, info ? info : @"nil");
+        return nil;
     }
     
     DPLogError(@"没有组件可以处理这个URL：%@ info: %@", message, info ? info : @"nil");
-    
     return nil;
 }
 
@@ -226,7 +248,7 @@
 
 - (MBMessageBus *)uiBus {
     if (_uiBus == nil) {
-        _uiBus = [[MBMessageBus alloc] init];
+        _uiBus = [[MBMessageBus alloc] initWithName:@"uiBus"];
         [_uiBus addObserver:self];
     }
     
@@ -235,7 +257,7 @@
 
 - (MBMessageBus *)serviceBus {
     if (_serviceBus == nil) {
-        _serviceBus = [[MBMessageBus alloc] init];
+        _serviceBus = [[MBMessageBus alloc] initWithName:@"serviceBus"];
         [_serviceBus addObserver:self];
     }
     
@@ -244,10 +266,19 @@
 
 - (MBMessageBus *)messageBus {
     if (_messageBus == nil) {
-        _messageBus = [[MBMessageBus alloc] init];
+        _messageBus = [[MBMessageBus alloc] initWithName:@"messageBus"];
+        [_messageBus addObserver:self];
     }
     
     return _messageBus;
+}
+
+- (MBMessageBus *)resourcesBus {
+    if (_resourcesBus == nil) {
+        _resourcesBus = [[MBMessageBus alloc] initWithName:@"resourcesBus"];
+        [_resourcesBus addObserver:self];
+    }
+    return _resourcesBus;
 }
 
 @end

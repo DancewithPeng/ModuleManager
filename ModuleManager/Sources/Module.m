@@ -25,6 +25,7 @@
 - (NSArray<NSString *> *)canHandleURLs { return nil; }
 - (NSArray<NSString *> *)canHandleServiceNames { return nil; }
 - (UIViewController *)viewControllerWithURL:(NSString *)url info:(NSDictionary<NSString *,id> *)info { return nil; }
+- (id)resourcesWithURL:(NSString *)url info:(NSDictionary<NSString *,id> *)info { return nil; }
 - (BOOL)runServiceWithName:(NSString *)serviceName info:(NSDictionary<NSString *,id> *)info callback:(void (^)(NSDictionary<NSString *,id> * _Nonnull))callback { return NO; }
 - (void)receivedMessage:(NSString *)message info:(nullable NSDictionary<NSString *, id> *)info {}
 

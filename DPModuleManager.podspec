@@ -16,7 +16,7 @@ Pod::Spec.new do |spec|
   #
 
   spec.name         = "DPModuleManager"
-  spec.version      = "1.0"
+  spec.version      = "1.0.1"
   spec.summary      = "模块(组件)管理器"
 
   # This description is used to generate tags and improve search results.

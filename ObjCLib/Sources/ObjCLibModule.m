@@ -13,8 +13,11 @@
 @implementation ObjCLibModule
 
 - (NSArray<NSString *> *)canHandleURLs {
-    return @[@"ObjCLib/ObjCLibViewController",
-             @"ObjCLib/ObjCLibViewController2"];
+    return @[
+        @"ObjCLib/ObjCLibViewController",
+        @"ObjCLib/ObjCLibViewController2",
+        @"ObjCLib/MyResources1"
+    ];
 }
 
 - (UIViewController *)viewControllerWithURL:(NSString *)url info:(NSDictionary<NSString *,id> *)info {
@@ -24,6 +27,13 @@
         return [[ObjCLibViewController alloc] initWithNibName:@"ObjCLibViewController" bundle: [NSBundle bundleForClass:self.class]];
     }
     
+    return nil;
+}
+
+- (id)resourcesWithURL:(NSString *)url info:(NSDictionary<NSString *,id> *)info {
+    if ([url isEqualToString:@"ObjCLib/MyResources1"]) {
+        return @"Hello World！";
+    }
     return nil;
 }
 

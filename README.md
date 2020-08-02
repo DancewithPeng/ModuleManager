@@ -9,7 +9,7 @@
 ## 导入
 
 ```ruby
-pod 'DPModuleManager', '~> 1.0.0'
+pod 'DPModuleManager', '~> 1.0.1'
 ```
 
 

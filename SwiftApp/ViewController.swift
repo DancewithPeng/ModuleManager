@@ -13,7 +13,9 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
+//        print("\(ModuleManager.shared.vi)")
+        print("\(ModuleManager.shared.resources(withURL: "ObjCLib/MyResources1", info: nil) ?? "nil resources")")
     }
 
     @IBAction func objCVCBtnDidClick(_ sender: Any) {
