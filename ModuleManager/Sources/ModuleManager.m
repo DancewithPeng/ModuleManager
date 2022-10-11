@@ -11,6 +11,7 @@
 #import <objc/runtime.h>
 #import <DPMessageBus/MBMessageBus.h>
 #import <DPLog/DPLog.h>
+#import <DPLog/DPLog-Swift.h>
 
 @interface ModuleManager () <MBMessageObserver>
 

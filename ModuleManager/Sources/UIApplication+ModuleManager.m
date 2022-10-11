@@ -9,6 +9,7 @@
 #import "UIApplication+ModuleManager.h"
 #import <DPObjCRuntime/ObjCRuntime.h>
 #import <DPLog/DPLog.h>
+#import <DPLog/DPLog-Swift.h>
 #import <objc/runtime.h>
 #import "ModuleManagerInternal.h"
 

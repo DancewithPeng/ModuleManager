@@ -11,7 +11,6 @@
 #endif
 
 #import "DPLog.h"
-#import "DPLogObjC.h"
 
 FOUNDATION_EXPORT double DPLogVersionNumber;
 FOUNDATION_EXPORT const unsigned char DPLogVersionString[];

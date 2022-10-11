@@ -8,6 +8,7 @@
 
 import UIKit
 import ModuleManager
+import DPLog
 
 
 @UIApplicationMain
@@ -16,11 +17,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        
+        do {
+
+            let level: DPLog.Message.HandleableLevel = .verbose
+            
+            try DPLog.Collector.shared.register(
+                    DPLog.ConsoleHandler(
+                        id: "com.woshipm.news.explore.DPLogCoodinator.ConsoleHandler",
+                        level: level,
+                        formatter: DPLog.PlainMessageFormatter()
+                    )
+                )
+        } catch {
+            print(error)
+        }
+        
         guard let vc = Module.bus.viewController(withURL: "ObjCLib/ObjCLibViewController", info: nil) else {
             return false
         }
         
-        print(vc)
+        HandyLog.debug(vc)
         
         return true
     }

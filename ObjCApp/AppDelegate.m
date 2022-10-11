@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import <DPLog/DPLog.h>
+#import <DPLog/DPLog-Swift.h>
 #import <ModuleManager/ModuleManager.h>
 
 

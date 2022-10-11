@@ -1,13 +1,92 @@
 # DPLog
 [TOC]
 
-日志工具
+## 概述
+
+Swift实现的非常轻量级的日志工具
+
+
 
 ## 导入
 
 ```ruby
-pod 'DPLog', '~> 2.0.0'
+pod 'DPLog', '~> 3.0.0'
 ```
+
+
+
+## 初始化
+
+**DPLog**在使用前，需要先注册日志处理器，常规操作是在AppDelegate中指定日志处理器
+
+```swift
+import DPLog
+
+// ...
+func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+
+    do {
+        try DPLog.Collector.shared.register(
+                DPLog.ConsoleHandler(
+                    id: "DPLogExample.ConsoleHandler",
+                    level: .verbose,
+                    formatter: DPLog.PlainMessageFormatter()
+                )
+            )
+    } catch {
+        print(error)
+    }
+  
+  	// ...
+
+    return true
+}
+
+// ...
+```
+
+目前**DPLog.Collector**不支持ObjC的API，如果需要在ObjC项目中初始化，可以先建一个`DPLogCoordinator.swift`文件，然后键入一下内容
+
+```swift
+import Foundation
+import DPLog
+
+@objc
+final class DPLogCoordinator: NSObject {
+    
+    @objc
+    static func setup() {
+        do {
+            try DPLog.Collector.shared.register(
+                    DPLog.ConsoleHandler(
+                        id: "DPLogExample.ConsoleHandler",
+                        level: .verbose,
+                        formatter: DPLog.PlainMessageFormatter()
+                    )
+                )
+        } catch {
+            print(error)
+        }
+    }
+}
+```
+
+然后在`AppDelegate.m`文件中通过ObjC的API调用`[DPLogCoordinator setup]`
+
+```objc
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
+    [DPLogCoordinator setup];    
+    return YES;
+}
+```
+
+在Swift环境中提供了两套API：**ThrowingLog**、**HandyLog**，区别是**ThrowingLog**需要开发者自行处理异常。而**HandyLog**如果发生异常，则会在控制台打印异常，而不需要开发者处理。为了方便，建议开发者设置一个别名
+
+```swift
+typealias Log = HandyLog
+```
+
+设置后则使用`Log.debug()`的API进行日志采集
 
 
 
@@ -51,67 +130,6 @@ NSError *myError =
 																			NSLocalizedDescriptionKey: @"Just a Demo"}];
 DPLogError(myError);
 ```
-
-
-
-### 日志等级配置
-
-**DPLog**默认的日志等级是`debug`，如果需要根据不同的环境进行配置，可以在适当的情况下配置**DPLog**的`Logger`
-
-```swift
-#if DEBUG
-		Log.setup(loggers: [DPConsoleLogger(logLevel: .debug)])
-#else
-		Log.setup(loggers: [DPConsoleLogger(logLevel: .error)])
-#endif
-```
-
-> `DPConsoleLogger`是**DPLog**实现的默认*Logger*，它的作用是将日志输出到控制台。如果想要控制日志输出到其他目标，请参考下面自定义的相关章节
-
-对应的**ObjC**语法
-
-```objective-c
-    DPLogDefaultFormatter *defaultFormatter = [[DPLogDefaultFormatter alloc] initWithDateFormat:@"yyyy-MM-dd HH:mm:ss.SSS"];
-#ifdef DEBUG
-    [DPLog setupWithLoggers:@[
-        [[DPConsoleLogger alloc] initWithLogLevel:DPLogLevelDebug formatter:defaultFormatter],
-    ]];
-#else
-    [DPLog setupWithLoggers:@[
-        [[DPConsoleLogger alloc] initWithLogLevel:DPLogLevelError formatter:defaultFormatter],
-    ]];
-#endif
-```
-
-
-
-## 自定义
-
-**DPLog**可以自定义*Logger*，用于控制日志的输出目标，同时也可以自定义*Logger*的输出格式
-
-> **DPLog**提供了控制台*Logger*的默认实现`DPConsoleLogger`，以及`DPLogFormatter`的默认实现`DPLogDefaultFormatter`，如果两者的已经满足了您的需求，则不需要重新自定相关实现，直接使用即可
-
-
-
-### 自定义Logger
-
-自定义*Logger*的方法非常简单，只需要遵循`DPLogger`协议，此协议规定规定了两个属性和一个方法
-
-- 属性**logLevel**：用于指定*Logger*的日志输出等级，低于*Logger*的日志输出等级的日志将不会被输出到*Logger*
-- 属性**formatter**：用于控制输出到*Logger*的信息格式工具，类型是`DPLogFormatter`，次类型也可以进行自定义，或者使用**DPLog**提供的默认格式`DPLogDefaultFormatter`
-- 方法`log(message:)`：用于处理日志输出的钩子，这里的`message`参数是已经进行过格式化的字符串
-
-细节请参考`DPConsoleLogger`的具体实现
-
-
-
-### 自定义Formatter
-
-实现自己的*Formatter*，需要遵循`DPLogFormatter`协议，此协议只规定了一个方法
-
-- 方法`formatString(for:)`：此方法用于把接口传过来的信息，转化成需要输出到日志的字符串，接口传过来的信息用`DPLogInformation`进行了封装
-
-细节请参考`DPLogDefaultFormatter`的具体实现
 
 
 

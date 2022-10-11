@@ -3,7 +3,7 @@ inhibit_all_warnings!               # 无视所有警告
 use_frameworks!                     # 使用framework代替静态库
 
 pod 'DPMessageBus', '~> 1.0.0'
-pod 'DPLog', '~> 2.0.0'
+pod 'DPLog', '~> 3.0.0'
 pod 'DPObjCRuntime', '~> 1.0.0'
 
 target 'ModuleManager' do					# target 对应Xcode中的target

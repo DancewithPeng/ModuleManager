@@ -16,7 +16,7 @@ Pod::Spec.new do |spec|
   #
 
   spec.name         = "DPModuleManager"
-  spec.version      = "1.0.1"
+  spec.version      = "1.0.2"
   spec.summary      = "模块(组件)管理器"
 
   # This description is used to generate tags and improve search results.
@@ -134,7 +134,7 @@ Pod::Spec.new do |spec|
 
   # spec.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }  
   spec.dependency 'DPMessageBus', '~> 1.0.0'
-  spec.dependency 'DPLog', '~> 2.0.0'
+  spec.dependency 'DPLog', '~> 3.0.0'
   spec.dependency 'DPObjCRuntime', '~> 1.0.0'
   
 end
